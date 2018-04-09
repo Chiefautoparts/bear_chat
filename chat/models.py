@@ -24,3 +24,7 @@ class Room(models.Model):
 
 	def send_message(self, message, user, msg_type=MSG_TYPE_MESSAGE):
 		final_msg = {'room': str(self.id), 'message': message, 'username': user.username, 'msg_type': msg_type}
+
+		self.websocket_group.send(
+			{'text': json.dumps(final_msg)}
+		)

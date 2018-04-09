@@ -21,3 +21,11 @@ def ws_receive(message):
 	payload = json.loads(message['text'])
 	payload['reply_channel'] = message.content['reply_channel']
 	Channel("chat.receive").send(payload)
+
+@channel_session_user
+@catch_client_error
+def chat_join(message):
+	room = get_room_or_error(message["room"], message.user)
+
+	if NOTIFY_USERS_ON_ENTER_OR_LEAVE_ROOMS:
+		
